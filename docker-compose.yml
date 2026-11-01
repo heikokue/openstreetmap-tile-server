@@ -10,8 +10,12 @@ services:
       source: osm-data
       target: /data/database
     - type: bind
-      source: osm-style
+      source: ../openstreetmap-carto
       target: /data/style
+#      read_only: true
+#    - type: bind
+#      source: osm-style
+#      target: /data/style
     - type: bind
       source: download/mittelfranken-latest.osm.pbf
       target: /data/region.osm.pbf
@@ -37,8 +41,12 @@ services:
       source: osm-data
       target: /data/database
     - type: bind
-      source: osm-style
+      source: ../openstreetmap-carto
       target: /data/style
+#      read_only: true
+#    - type: bind
+#      source: osm-style
+#      target: /data/style
     - type: bind
       source: osm-tiles
       target: /data/tiles
