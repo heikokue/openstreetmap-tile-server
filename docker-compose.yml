@@ -1,14 +1,48 @@
 version: '3'
 
 services:
-  map:
-    image: overv/openstreetmap-tile-server
+  osm-tile-server-import:
+    container_name: osm-tile-server-import
+    image: overv/openstreetmap-tile-server:latest
     volumes:
-      - osm-data:/data/database/
+#    - type: bind
+#      source: /run/desktop/mnt/host/d/Entwicklung/OSM/fw_osm/openstreetmap-tile-server/osm-data
+#      target: /data/database
+    - osm-data:/data/database
+    environment:
+      DOWNLOAD_PBF: https://download.geofabrik.de/europe/germany/bayern/mittelfranken-latest.osm.pbf
+      DOWNLOAD_POLY: https://download.geofabrik.de/europe/germany/bayern/mittelfranken.poly
+      UPDATES: enabled
+#      REPLICATION_URL: https://download.geofabrik.de/europe/germany/bayern/mittelfranken-updates
+#      MAX_INTERVAL_SECONDS: 3600
+    command: "import"
+
+  osm-tile-server-run:
+    container_name: osm-tile-server-run
+    image: overv/openstreetmap-tile-server:latest
+    volumes:
+#    - type: bind
+#      source: /run/desktop/mnt/host/d/Entwicklung/OSM/fw_osm/openstreetmap-tile-server/osm-data
+#      target: /data/database
+#    - type: bind
+#      source: /run/desktop/mnt/host/d/Entwicklung/OSM/fw_osm/openstreetmap-tile-server/osm-tiles
+#      target: /data/tiles
+    - osm-data:/data/database
+    - osm-data:/data/tiles
+    environment:
+      UPDATES: enabled
+      REPLICATION_URL: https://download.geofabrik.de/europe/germany/bayern/mittelfranken-updates
+      MAX_INTERVAL_SECONDS: 3600
+      THREADS: 12
     ports:
-      - "8080:80"
+    - 80:80
+    depends_on:
+      osm-tile-server-import:
+        condition: service_completed_successfully
     command: "run"
 
 volumes:
   osm-data:
-    external: true
+    name: osm-tile-server-data
+  osm-tiles:
+    name: osm-tile-server-tiles
