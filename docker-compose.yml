@@ -11,23 +11,23 @@ services:
       target: /data/database
     - type: bind
       source: ../openstreetmap-carto
-      target: /data/style
-#      read_only: true
-#    - type: bind
 #      source: osm-style
-#      target: /data/style
+      target: /data/style
     - type: bind
-      source: download/mittelfranken-latest.osm.pbf
+      source: download/fuerth.osm.pbf
+#      source: download/mittelfranken-latest.osm.pbf
       target: /data/region.osm.pbf
       read_only: true
     - type: bind
-      source: download/mittelfranken.poly
+      source: download/fuerth.poly
+#      source: download/mittelfranken.poly
       target: /data/region.poly
       read_only: true
     environment:
 #      DOWNLOAD_PBF: https://download.geofabrik.de/europe/germany/bayern/mittelfranken-latest.osm.pbf
 #      DOWNLOAD_POLY: https://download.geofabrik.de/europe/germany/bayern/mittelfranken.poly
-      UPDATES: enabled
+      UPDATES: disabled
+#      UPDATES: enabled
 #      REPLICATION_URL: https://download.geofabrik.de/europe/germany/bayern/mittelfranken-updates
 #      MAX_INTERVAL_SECONDS: 3600
     command: "import"
@@ -42,19 +42,17 @@ services:
       target: /data/database
     - type: bind
       source: ../openstreetmap-carto
-      target: /data/style
-#      read_only: true
-#    - type: bind
 #      source: osm-style
-#      target: /data/style
+      target: /data/style
     - type: bind
       source: osm-tiles
       target: /data/tiles
     environment:
-      UPDATES: enabled
-      REPLICATION_URL: https://download.geofabrik.de/europe/germany/bayern/mittelfranken-updates
-      MAX_INTERVAL_SECONDS: 3600
-      THREADS: 12
+      UPDATES: disabled
+#      UPDATES: enabled
+#      REPLICATION_URL: https://download.geofabrik.de/europe/germany/bayern/mittelfranken-updates
+#      MAX_INTERVAL_SECONDS: 3600
+#      THREADS: 12
     ports:
     - 80:80
     depends_on:
