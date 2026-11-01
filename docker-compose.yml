@@ -5,10 +5,12 @@ services:
     container_name: osm-tile-server-import
     image: overv/openstreetmap-tile-server:latest
     volumes:
-#    - type: bind
-#      source: /run/desktop/mnt/host/d/Entwicklung/OSM/fw_osm/openstreetmap-tile-server/osm-data
-#      target: /data/database
-    - osm-data:/data/database
+    - type: bind
+      source: osm-data
+      target: /data/database
+    - type: bind
+      source: osm-style
+      target: /data/style
     environment:
       DOWNLOAD_PBF: https://download.geofabrik.de/europe/germany/bayern/mittelfranken-latest.osm.pbf
       DOWNLOAD_POLY: https://download.geofabrik.de/europe/germany/bayern/mittelfranken.poly
@@ -21,14 +23,15 @@ services:
     container_name: osm-tile-server-run
     image: overv/openstreetmap-tile-server:latest
     volumes:
-#    - type: bind
-#      source: /run/desktop/mnt/host/d/Entwicklung/OSM/fw_osm/openstreetmap-tile-server/osm-data
-#      target: /data/database
-#    - type: bind
-#      source: /run/desktop/mnt/host/d/Entwicklung/OSM/fw_osm/openstreetmap-tile-server/osm-tiles
-#      target: /data/tiles
-    - osm-data:/data/database
-    - osm-data:/data/tiles
+    - type: bind
+      source: osm-data
+      target: /data/database
+    - type: bind
+      source: osm-style
+      target: /data/style
+    - type: bind
+      source: osm-tiles
+      target: /data/tiles
     environment:
       UPDATES: enabled
       REPLICATION_URL: https://download.geofabrik.de/europe/germany/bayern/mittelfranken-updates
@@ -40,9 +43,3 @@ services:
       osm-tile-server-import:
         condition: service_completed_successfully
     command: "run"
-
-volumes:
-  osm-data:
-    name: osm-tile-server-data
-  osm-tiles:
-    name: osm-tile-server-tiles
