@@ -3,8 +3,8 @@ services:
 
   osm-tile-server-import:
     container_name: osm-tile-server-import
-    image: openstreetmap-tile-server:latest # local build
- #   image: overv/openstreetmap-tile-server:latest
+#    image: openstreetmap-tile-server:latest # local build
+    image: overv/openstreetmap-tile-server:latest
     volumes:
     - type: bind
       source: osm-data
@@ -34,8 +34,8 @@ services:
 
   osm-tile-server-run:
     container_name: osm-tile-server-run
-    image: openstreetmap-tile-server:latest # local build
-#    image: overv/openstreetmap-tile-server:latest
+#    image: openstreetmap-tile-server:latest # local build
+    image: overv/openstreetmap-tile-server:latest
     volumes:
     - type: bind
       source: osm-data
