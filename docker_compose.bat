@@ -1,7 +1,5 @@
 @echo off
 
-rem docker build -t openstreetmap-tile-server .
-
 docker container rm -f osm-tile-server-import
 docker container rm -f osm-tile-server-run
 
