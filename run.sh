@@ -115,6 +115,9 @@ if [ "$1" == "import" ]; then
         sudo -u postgres psql -d gis -f /data/style/${NAME_SQL:-indexes.sql}
     fi
 
+    # de-style: new functions.sql
+    sudo -u postgres psql -d gis -f /data/style/functions.sql
+
     #Import external data
     chown -R renderer: /home/renderer/src/ /data/style/
     if [ -f /data/style/scripts/get-external-data.py ] && [ -f /data/style/external-data.yml ]; then
